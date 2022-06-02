@@ -1,3 +1,4 @@
+# Генерация паттернов, отсечение ошибающихся на тренировочной выборке не предществующей смене тренда
 import pandas as pd
 import os
 import re
@@ -10,18 +11,23 @@ from tqdm.auto import tqdm
 from utils import *
 
 # Гиперпараметры модели
-DELTAS = [1]
-SIZE_PATTERNS = [3]
-# EPS_RANGE = [0.01]
+DELTAS = range(1, 10)
+SIZE_PATTERNS = range(2, 7)
 SCALER = 'max'
 N_JOBS = 96
+SIZE_TO_EPS = {2: 0.004,
+               3: 0.016,
+               4: 0.032,
+               5: 0.046,
+               6: 0.062}
 
 # Создаем инстанс класса расчета расстояний
 dist = DTWDistance()
 
 # Подгужаем данные
-train = pd.read_csv('/home/avpodtikhov/trendchange/source/train_hp.csv')
-test = pd.read_csv('/home/avpodtikhov/trendchange/source/train_hp.csv')
+train = pd.read_csv('/home/avpodtikhov/trendchange/source/train_stocks.csv')
+test = pd.read_csv('/home/avpodtikhov/trendchange/source/train_stocks.csv')
+
 for DELTA in tqdm(DELTAS):
     for SIZE_PATTERN in tqdm(SIZE_PATTERNS, leave=False):
         current_pattern = [1] * SIZE_PATTERN
@@ -37,7 +43,7 @@ for DELTA in tqdm(DELTAS):
         # Расчитываем расстояние между всем сэмплами из тестового и тренировочного датасетов
         # D = dist.pairwise(data1, data, N_JOBS)
         stop = False
-        for eps in [0.016]:
+        for eps in [SIZE_TO_EPS[SIZE_PATTERN]]:
             # Кол-во верных срабатываний с данным EPS для каждого паттерна из тренировочного набора
             # length_true = (D < eps).sum(axis=1)
             # Индексы паттернов, которые сработали на тестовом наборе данных
@@ -59,7 +65,7 @@ for DELTA in tqdm(DELTAS):
                 D1 = dist.coocurences(patterns, data, eps, N_JOBS)
                 length_false = length_false + D1
                 # Индексы паттернов сработавших ложно 1 раз
-                idx_false = np.where(length_false == 0)[0]
+                idx_false = np.where(length_false <= 10)[0]
                 # Исключаем ложносрабатывающие паттерны
                 patterns = patterns[idx_false]
                 # length_true = length_true[idx_false]

@@ -1,3 +1,4 @@
+# Подсчет финальных показателей
 import pandas as pd
 import os
 import re
@@ -14,11 +15,11 @@ DELTAS = range(1, 11)
 SIZE_PATTERNS = range(2, 7)
 SCALER = 'max'
 N_JOBS = 96
-SIZE_TO_EPS = {2: 0.002,
-               3: 0.01,
-               4: 0.028,
-               5: 0.04,
-               6: 0.106}
+SIZE_TO_EPS = {2: 0.004,
+               3: 0.016,
+               4: 0.032,
+               5: 0.046,
+               6: 0.062}
 
 # Создаем инстанс класса расчета расстояний
 dist = DTWDistance()

@@ -1,3 +1,4 @@
+# Словарь сопоставления характерной последовательности и индексов срабатывания на тренировочной выборке
 import pandas as pd
 from tqdm.auto import tqdm
 import numpy as np

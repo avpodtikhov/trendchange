@@ -1,0 +1,7 @@
+/home/aarukavishnikov/apodtikhov/env_default/lib/python3.7/site-packages/pandas/compat/__init__.py:124: UserWarning: Could not import the lzma module. Your installed Python is incomplete. Attempting to use lzma compression will result in a RuntimeError.
+  warnings.warn(msg)
+1
+Traceback (most recent call last):
+  File "fast_search.py", line 11, in <module>
+    raise 1
+TypeError: exceptions must derive from BaseException

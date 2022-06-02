@@ -1,3 +1,4 @@
+# Подсчет пересечений между последовательностями
 import pandas as pd
 from tqdm.auto import tqdm
 import numpy as np
