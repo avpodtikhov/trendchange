@@ -7,3 +7,4 @@
 python setup.py install
 ```
 
+Итоговый набор паттернов и исходные данные доступны по [ссылке](https://drive.google.com/drive/folders/1UFEa7gluJ0J9yv9xZaGpDTSgq8uKN-hz?usp=sharing)
